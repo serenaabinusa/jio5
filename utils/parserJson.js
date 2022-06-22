@@ -65,14 +65,12 @@ const parserJson = async (url, folderTarget, filename) => {
 	}
 
 	function isEmpty(obj) {
-		return Object.values(obj).length === 0;
+		return Object.keys(obj) && Object.values(obj).length === 0;
 	}
 
-	if (isEmpty(extractContent.content)) {
+	if (!extractContent.content) {
 		return
 	}
-
-	extractContent.content = document.body.outerHTML
 
 	const data = {
 		title: extractContent.title ? extractContent.title.trim() : '',
@@ -80,7 +78,7 @@ const parserJson = async (url, folderTarget, filename) => {
 		url: extractContent.url ? extractContent.url.trim() : '',
 		canonicals: extractContent.canonicals ? extractContent.canonicals.map(conical => conical.trim()) : '',
 		description: extractContent.description ? extractContent.description.trim() : '',
-		content: extractContent.content ? extractContent.content.trim() : '',
+		content: extractContent.content ? document.body.outerHTML.trim() : '',
 		image: extractContent.image ? extractContent.image.trim() : '',
 		author: extractContent.author ? extractContent.author.trim() : '',
 		source: extractContent.source ? extractContent.source.trim() : '',
@@ -88,6 +86,7 @@ const parserJson = async (url, folderTarget, filename) => {
 		publishedTime: extractContent.publishedTime ? extractContent.publishedTime.trim() : '',
 		duration: extractContent.duration ? extractContent.duration : 0
 	}
+
 
 	// return fs.writeFileSync(filename, JSON.stringify(extractContent))
 	return await saveBrainly(data)
