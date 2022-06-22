@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Klutik</title>
+
+		<style>
+			html,
+			body {
+				height: 100vh;
+			}
+
+			body {
+				margin: 0;
+			}
+
+			.flex-container {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.flex-container h2 {
+				margin-top: -10px
+			}
+		</style>
+	</head>
+
+	<body style="margin:0">
+
+		<div class="flex-container">
+			<h1>Total FIle</h1>
+			<h2 id="total">Calculating...</h2>
+		</div>
+
+		<script src='/socket.io/socket.io.js'></script>
+		<script>
+			const socket = io("/status");
+
+			socket.on('welcome', function(data) {
+				//console.log(data)
+			});
+
+			const statusTotal = document.querySelector('#total');
+
+			socket.on('count', function(data) {
+				statusTotal.innerText = data
+			});
+		</script>
+	</body>
+
+</html>
