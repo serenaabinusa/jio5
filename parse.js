@@ -127,23 +127,17 @@ const parse = async () => {
 			let sitemapLength = sitemapUrls.length;
 			let newSitemapUrls;
 
-			// const readScrapeDB = fs.readFileSync(scrapeDB, "utf-8");
-			// const parseScrapeDB = JSON.parse(readScrapeDB);
-
-			// const findSitemapName = parseScrapeDB.find(
-			// 	(sitemap) => sitemap.sitemapName == sitemapName
-			// );
 			const readScrapeDB = getBrainlysLatest
 
 			if (readScrapeDB) {
 				if (Object.values(readScrapeDB.url) != "") {
 					const lastErrorSitemapUrl = sitemapUrls.indexOf(
 						readScrapeDB.url
-					) + 1;
+					);
 
 					if (lastErrorSitemapUrl > -1) {
 						newSitemapUrls = sitemapUrls.slice(
-							lastErrorSitemapUrl,
+							lastErrorSitemapUrl + 1,
 							sitemapLength
 						);
 
@@ -161,19 +155,6 @@ const parse = async () => {
 				return sitemapUrls;
 			}
 
-			// else {
-			// 	const newSitemapDB = {
-			// 		sitemapName: sitemapName,
-			// 		lastSitemapUrl: "",
-			// 		status: "",
-			// 	};
-
-			// 	parseScrapeDB.push(newSitemapDB);
-
-			// 	fs.writeFileSync(scrapeDB, JSON.stringify(parseScrapeDB, null, 2));
-
-			// 	return sitemapUrls;
-			// }
 		};
 
 
